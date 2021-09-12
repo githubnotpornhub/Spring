@@ -1,0 +1,25 @@
+@GetMapping("/login")
+    public String login(String username, String password, Model model,
+                        HttpServletResponse resp) throws IOException {
+
+        resp.sendRedirect("dologin.html");
+
+        //判断用户是否正确输入信息进行登录
+        if (StringUtils.isEmpty(username)) {
+            return "请输入账号进行登录";
+        }
+        if (StringUtils.isEmpty(password)) {
+            return "请输入账号密码";
+        }
+
+        //判断用户输入的信息与数据库中的数据是否存在和匹配
+        User user = userMapper.selectUser(username);
+        if (user == null) {
+            return "redirect:/html/dologin.html";
+        }
+        if (Objects.equals(password, user.getPassword())) {
+            return "登陆成功";
+        }
+        //return "账号密码不正确，请重新输入";
+        return "redirect:/html/dologin.html";
+    }

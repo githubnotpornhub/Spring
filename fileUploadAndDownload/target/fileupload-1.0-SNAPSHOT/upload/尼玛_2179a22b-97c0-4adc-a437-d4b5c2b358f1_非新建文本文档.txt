@@ -1,0 +1,53 @@
+手机迅雷下载文件地址 最后上传  8.29
+此电脑\Redmi Note 8 Pro\内部存储设备\Android\data\com.xunlei.downloadprovider\files\ThunderDownload
+
+手机QQ浏览器等视频地址  最后上传  8.29
+此电脑\Redmi Note 8 Pro\内部存储设备\QQBrowser\视频
+
+夸克 最后上传 8.29
+此电脑\Redmi Note 8 Pro\内部存储设备\Quark\Download
+
+IP
+windowsIP：192.168.1.102
+linuxIP：192.168.29.128
+
+tomcat安装位置
+D:\apache-tomcat-9.0.30
+
+其他一些开发软件位置
+（虚拟机及Linux镜像，linux版本的软件等。Git，xshell，xftp，redis，ZooKeeper等）
+D:\DelevoperUse
+
+
+我的Tomcat和IDEA项目位置
+C:\apache-tomcat-9.0.30\webapps\
+
+我的eclipse项目位置（使用eclipse需要jdk11以上）
+在workspace文件夹中
+
+jdk1.8位置 64位 
+C:\JAVA_
+（java(此处有一个空格间隔开，不然会显示不是内部或外部命令) -version ）
+
+jdk11
+在eclipse目录下
+
+Idea位置
+C:\IDEA
+
+maven本地仓库
+C:\Maven\repository
+
+mysql-jdbc驱动
+C:\MYSQL
+
+mysql
+root
+登录密码88888888（八个八）
+
+Mylinux
+账户名linux666（还是linux123？）
+密码linux666
+root账户密码也是linux666
+
+
