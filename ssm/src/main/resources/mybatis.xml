@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <typeAliases>
+         <package name="com.my.entity"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- config params as the following -->
+            <property name="reasonable " value="true"/>
+            <!--<property name="dialect" value="mysql" />-->
+        </plugin>
+    </plugins>
+
+    <mappers>
+        <mapper resource="com/my/mapper/UserDao.xml"/>
+    </mappers>
+
+</configuration>
