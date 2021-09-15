@@ -16,5 +16,15 @@
         <property name="prefix" value="/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-
+    <!--配置拦截器（只拦截请求，不能拦截具体页面）-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--配置不需要拦截器作用的路径-->
+            <mvc:exclude-mapping path="/loginView"/>
+            <mvc:exclude-mapping path="/login"/>
+            <!--拦截器路径-->
+            <bean class="com.my.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

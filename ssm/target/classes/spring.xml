@@ -23,6 +23,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:mybatis.xml"/>
         <!-- 配置分页插件 -->
+        <!--分页插件pagehelper4.x版本与5.x版本在mybatis配置文件和spring配置文件中的配置方式不太一样-->
         <property name="plugins">
             <array>
                 <bean class="com.github.pagehelper.PageHelper">
