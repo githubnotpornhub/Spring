@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/mvc
+	 http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	 http://www.springframework.org/schema/aop
+	  https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--读取jdbc.properties配置文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--配置Mybatis-->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--配置SqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+    </bean>
+    <!--Spring和Mybatis整合：配置扫描DAO接口的包，注入Spring容器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.my.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+    <!--注解注入-->
+    <context:component-scan base-package="com.my.controller"/>
+    <context:component-scan base-package="com.my.service"/>
+
+    <mvc:annotation-driven/>
+
+    <!--事务管理器配置-->
+    <bean id="txManger" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--定义通知:配置切入点-->
+    <!--此处添加transaction-manager属性时报红，原来是idea自动引入的约束不正确，从CSDN上找到了正确的约束替换后就成功了-->
+    <tx:advice id="txAdvice" transaction-manager="txManger">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="update*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--AOP切面配置-->
+    <aop:config>
+        <aop:pointcut id="serviceOperation" expression="execution(* com.my.service.*.*(..))"/>
+        <!--定义切面:advisor常用于事务管理-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+    </aop:config>
+
+</beans>
