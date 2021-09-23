@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--待切入的目标对象（业务模块类）/ 目标对象-->
+    <bean id="userDao" class="com.my.bean.UserDaoImpl"/>
+    <bean id="studentDao" class="com.my.bean.StudentDaoImpl"/>
+    <bean id="scoreDao" class="com.my.bean.ScoreDaoImpl"/>
+
+    <!--需统一进行切入的切面类 / 通知(切面类)-->
+    <bean id="myAspect" class="com.my.aspect.MyAspect"/>
+
+    <!--使用Spring代理工厂为各个功能模块定义一个代理对象-->
+    <!--定义一个名称为userDaoProxy的  代理对象-->
+    <bean id="userDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!--指定代理对象实现的接口-->
+        <property name="proxyInterfaces" value="com.my.bean.UserDao"/>
+        <!--指定目标对象、  切入点-->
+        <property name="target" ref="userDao"/>
+        <!--指定切面，织入环绕通知-->
+        <property name="interceptorNames" value="myAspect"/>
+    </bean>
+    <!--定义一个名称为studentDaoProxy的代理对象-->
+    <bean id="studentDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="com.my.bean.StudentDao"/>
+        <property name="target" ref="studentDao"/>
+        <property name="interceptorNames" value="myAspect"/>
+        <!--指定代理方式,true表示使用CGLIB,False(默认)表示使用JDK动态代理
+        <property name="proxyTargetClass" value="true"/>
+        -->
+    </bean>
+    <!--定义一个名称为scoreDaoProxy的代理对象-->
+    <bean id="scoreDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="com.my.bean.ScoreDao"/>
+        <property name="target" ref="scoreDao"/>
+        <property name="interceptorNames" value="myAspect"/>
+        <!--指定代理方式,true表示使用CGLIB,False(默认)表示使用JDK动态代理-->
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+</beans>
